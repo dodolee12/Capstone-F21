@@ -1,54 +1,56 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
- 
-struct QNode* newNode(void* k)
-{
-    struct QNode* temp = (struct QNode*)malloc(sizeof(struct QNode));
-    temp->val = k;
-    temp->next = NULL;
-    return temp;
-}
 
 // A utility function to create an empty queue
-struct Queue* createQueue()
+struct Queue* createQueue(int capacity)
 {
-    struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
-    q->front = q->rear = NULL;
-    return q;
+    struct Queue* queue = (struct Queue*)malloc(
+        sizeof(struct Queue));
+    queue->capacity = capacity;
+    queue->front = queue->size = 0;
+ 
+    // This is important, see the enqueue
+    queue->rear = capacity - 1;
+    queue->array = (struct Command*) malloc(
+        queue->capacity * sizeof(struct Command));
+    return queue;
+}
+
+// Queue is full when size becomes
+// equal to the capacity
+int isFull(struct Queue* queue)
+{
+    return (queue->size == queue->capacity);
+}
+
+// Queue is empty when size is 0
+int isEmpty(struct Queue* queue)
+{
+    return (queue->size == 0);
 }
  
 // The function to add a key k to q
-void enQueue(struct Queue* q, void* k)
+void enQueue(struct Queue* queue, struct Command k)
 {
-    // Create a new LL node
-    struct QNode* temp = newNode(k);
- 
-    // If queue is empty, then new node is front and rear both
-    if (q->rear == NULL) {
-        q->front = q->rear = temp;
+    if (isFull(queue))
         return;
-    }
- 
-    // Add the new node at the end of queue and change rear
-    q->rear->next = temp;
-    q->rear = temp;
+    queue->rear = (queue->rear + 1)
+                  % queue->capacity;
+    queue->array[queue->rear] = k;
+    queue->size = queue->size + 1;
 }
  
 // Function to remove a key from given queue q
-void deQueue(struct Queue* q)
+void deQueue(struct Queue* queue)
 {
-    // If queue is empty, return NULL.
-    if (q->front == NULL)
+    if (isEmpty(queue))
         return;
- 
-    // Store previous front and move front one node ahead
-    struct QNode* temp = q->front;
- 
-    q->front = q->front->next;
- 
-    // If front becomes NULL, then change rear also as NULL
-    if (q->front == NULL)
-        q->rear = NULL;
- 
-    free(temp);
+    queue->front = (queue->front + 1)
+                   % queue->capacity;
+    queue->size = queue->size - 1;
+}
+
+struct Command* front(struct Queue* queue){
+    return &queue->array[queue->front];
 }

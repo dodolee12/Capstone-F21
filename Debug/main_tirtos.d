@@ -146,6 +146,7 @@ main_tirtos.obj: C:/ti/simplelink_sdk_ble_plugin_3_20_00_24/source/ti/npi/hal_ty
 main_tirtos.obj: ../coordinateProcessing.h
 main_tirtos.obj: C:/ti/simplelink_msp432e4_sdk_3_20_00_10/source/ti/posix/ccs/pthread.h
 main_tirtos.obj: C:/ti/simplelink_msp432e4_sdk_3_20_00_10/source/ti/posix/ccs/sched.h
+main_tirtos.obj: ../testTask.h
 
 ../main_tirtos.c: 
 C:/ti/ccs1020/ccs/tools/compiler/ti-cgt-arm_20.2.2.LTS/include/stdint.h: 
@@ -293,3 +294,4 @@ C:/ti/simplelink_sdk_ble_plugin_3_20_00_24/source/ti/npi/hal_types.h:
 ../coordinateProcessing.h: 
 C:/ti/simplelink_msp432e4_sdk_3_20_00_10/source/ti/posix/ccs/pthread.h: 
 C:/ti/simplelink_msp432e4_sdk_3_20_00_10/source/ti/posix/ccs/sched.h: 
+../testTask.h: 

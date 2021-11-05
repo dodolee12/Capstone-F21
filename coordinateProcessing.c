@@ -5,7 +5,7 @@
 #include "command.h"
 
 void coordinateProcessing_createTask(){
-    coordQueue = createQueue();
+    coordQueue = createQueue(15000);
     pthread_mutex_init(&queueLock,NULL);
     pthread_cond_init(&queueNotEmpty,NULL);
 
@@ -54,10 +54,10 @@ void* processQueue(void* args){
     //application loop
     while(1){
         pthread_mutex_lock(&queueLock);
-        while(coordQueue->front == NULL){
+        while(isEmpty(coordQueue)){
             pthread_cond_wait(&queueNotEmpty, &queueLock);
         }
-        struct Command* nextCoord = (struct Command*) coordQueue->front->val;
+        struct Command* nextCoord = front(coordQueue);
         deQueue(coordQueue);
         pthread_mutex_unlock(&queueLock);
 
@@ -80,8 +80,7 @@ void* processQueue(void* args){
 //                    break;
 //            }
 //        }
-        free(nextCoord);
     }
 
-    return NULL;
+   // return NULL;
 }

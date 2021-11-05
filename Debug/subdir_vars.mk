@@ -16,7 +16,8 @@ C:/ti/simplelink_sdk_ble_plugin_3_20_00_24/source/ti/snp/blestack/c-array/cc2640
 ../main_tirtos.c \
 ../platform_msp432e401y.c \
 ../project_zero.c \
-../queue.c 
+../queue.c \
+../testTask.c 
 
 C_DEPS += \
 ./MSP_EXP432E401Y.d \
@@ -26,7 +27,8 @@ C_DEPS += \
 ./main_tirtos.d \
 ./platform_msp432e401y.d \
 ./project_zero.d \
-./queue.d 
+./queue.d \
+./testTask.d 
 
 OBJS += \
 ./MSP_EXP432E401Y.obj \
@@ -36,7 +38,8 @@ OBJS += \
 ./main_tirtos.obj \
 ./platform_msp432e401y.obj \
 ./project_zero.obj \
-./queue.obj 
+./queue.obj \
+./testTask.obj 
 
 OBJS__QUOTED += \
 "MSP_EXP432E401Y.obj" \
@@ -46,7 +49,8 @@ OBJS__QUOTED += \
 "main_tirtos.obj" \
 "platform_msp432e401y.obj" \
 "project_zero.obj" \
-"queue.obj" 
+"queue.obj" \
+"testTask.obj" 
 
 C_DEPS__QUOTED += \
 "MSP_EXP432E401Y.d" \
@@ -56,7 +60,8 @@ C_DEPS__QUOTED += \
 "main_tirtos.d" \
 "platform_msp432e401y.d" \
 "project_zero.d" \
-"queue.d" 
+"queue.d" \
+"testTask.d" 
 
 C_SRCS__QUOTED += \
 "../MSP_EXP432E401Y.c" \
@@ -66,6 +71,7 @@ C_SRCS__QUOTED += \
 "../main_tirtos.c" \
 "../platform_msp432e401y.c" \
 "../project_zero.c" \
-"../queue.c" 
+"../queue.c" \
+"../testTask.c" 
 
 

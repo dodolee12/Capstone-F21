@@ -46,7 +46,7 @@
 #include "project_zero.h"
 #include "Profile/data_service.h"
 #include "coordinateProcessing.h"
-#include "testTask.c"
+#include "testTask.h"
 
 /*
  * The following (weak) function definition is needed in applications

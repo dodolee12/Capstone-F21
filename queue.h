@@ -1,18 +1,21 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct QNode {
-    void* val;
-    struct QNode* next;
-};
+#include "command.h"
 
 struct Queue {
-    struct QNode *front, *rear;
+    int front, rear, size;
+    unsigned capacity;
+    struct Command* array;
 };
-struct QNode* newNode(void* k);
-struct Queue* createQueue();
-void enQueue(struct Queue* q, void* k);
+
+struct Queue* createQueue(int capacity);
+void enQueue(struct Queue* q, struct Command k);
 void deQueue(struct Queue* q);
+int isEmpty(struct Queue* queue);
+int isFull(struct Queue* queue);
+struct Command* front(struct Queue* queue);
+
 
 
 #endif

@@ -1250,13 +1250,13 @@ static void ProjectZero_processDataServiceCB(uint8_t charID)
 
     struct Command* command;
     if(strncmp(newCoord,"Start",5) == 0){
-        command = createCommand(0,0,1);
+        command = createCommand(0,0,START);
     }
     else if(strncmp(newCoord,"Lift Pen",8) == 0){
-        command = createCommand(0,0,2);
+        command = createCommand(0,0,LIFT_PEN);
     }
     else if(strncmp(newCoord,"Finish",6) == 0){
-        command = createCommand(0,0,3);
+        command = createCommand(0,0,STOP);
     }
     else{
         //parse input coord
@@ -1277,13 +1277,13 @@ static void ProjectZero_processDataServiceCB(uint8_t charID)
 
         int x = atoi(xcoord);
         int y = atoi(ycoord);
-        command = createCommand(x,y,0);
+        command = createCommand(x,y,COORDINATE);
         free(xcoord);
         free(ycoord);
     }
 
     pthread_mutex_lock(&queueLock);
-    enQueue(coordQueue,command);
+    enQueue(coordQueue,*command);
     pthread_mutex_unlock(&queueLock);
     pthread_cond_signal(&queueNotEmpty);
 

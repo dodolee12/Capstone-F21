@@ -6,18 +6,9 @@
  */
 
 
-
+#include "testTask.h"
 
 #include <stdlib.h>
-#include <pthread.h>
-
-#define TEST_PRIORITY 1
-#define TEST_STACK_SIZE 32768
-
-pthread_t thread;
-
-void* testMethod(void* args);
-
 
 void test_createTask(){
     //everything below is for OS thread logic
@@ -61,6 +52,5 @@ void test_createTask(){
 
 //DO ALL TESTING HERE
 void* testMethod(void* args){
-
-}
+    ;
 }
