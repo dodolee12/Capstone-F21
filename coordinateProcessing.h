@@ -15,7 +15,7 @@ pthread_cond_t queueNotEmpty;
 
 void coordinateProcessing_createTask();
 
-void* processQueue();
+void* processQueue(void* args);
 
 
 #endif

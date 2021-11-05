@@ -16,6 +16,8 @@
 
 pthread_t thread;
 
+void* testMethod(void* args);
+
 
 void test_createTask(){
     //everything below is for OS thread logic

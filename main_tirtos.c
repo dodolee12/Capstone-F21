@@ -46,6 +46,7 @@
 #include "project_zero.h"
 #include "Profile/data_service.h"
 #include "coordinateProcessing.h"
+#include "testTask.c"
 
 /*
  * The following (weak) function definition is needed in applications
@@ -97,7 +98,7 @@ int main(void)
     coordinateProcessing_createTask();
 
     //test task
-
+    test_createTask();
 
     /* Enable interrupts and start SYS/BIOS */
     BIOS_start();
