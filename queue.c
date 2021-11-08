@@ -2,38 +2,62 @@
 #include <stdlib.h>
 #include "queue.h"
 
-// A utility function to create an empty queue
-struct Queue* createQueue(int capacity)
+/*!
+* @brief Initialization function for queue_t object
+*
+* @param[in] capacity The max capacity of the queue
+*
+* @return The created queue_t object
+*/
+queue_t* create_queue(int capacity)
 {
-    struct Queue* queue = (struct Queue*)malloc(
-        sizeof(struct Queue));
+    queue_t* queue = (queue_t*)malloc(
+        sizeof(queue_t));
     queue->capacity = capacity;
     queue->front = queue->size = 0;
  
     // This is important, see the enqueue
     queue->rear = capacity - 1;
-    queue->array = (struct Command*) malloc(
-        queue->capacity * sizeof(struct Command));
+    queue->array = (command_t*) malloc(
+        queue->capacity * sizeof(command_t));
     return queue;
 }
 
-// Queue is full when size becomes
-// equal to the capacity
-int isFull(struct Queue* queue)
+/*!
+* @brief Helper whether queue is full
+*
+* @param[in] queue: pointer to the queue object
+*
+* @return Whether queue is full
+*/
+int is_full(queue_t* queue)
 {
     return (queue->size == queue->capacity);
 }
 
-// Queue is empty when size is 0
-int isEmpty(struct Queue* queue)
+/*!
+* @brief Helper whether queue is empty
+*
+* @param[in] queue: pointer to the queue object
+*
+* @return Whether queue is empty
+*/
+int is_empty(queue_t* queue)
 {
     return (queue->size == 0);
 }
  
-// The function to add a key k to q
-void enQueue(struct Queue* queue, struct Command k)
+/*!
+* @brief enqueue object
+*
+* @param[in] queue: pointer to the queue object
+* @param[in] k: command object to enqueue
+*
+* @return void
+*/
+void enqueue(queue_t* queue, command_t k)
 {
-    if (isFull(queue))
+    if (is_full(queue))
         return;
     queue->rear = (queue->rear + 1)
                   % queue->capacity;
@@ -41,16 +65,29 @@ void enQueue(struct Queue* queue, struct Command k)
     queue->size = queue->size + 1;
 }
  
-// Function to remove a key from given queue q
-void deQueue(struct Queue* queue)
+/*!
+* @brief dequeue object
+*
+* @param[in] queue: pointer to the queue object
+*
+* @return void
+*/
+void dequeue(queue_t* queue)
 {
-    if (isEmpty(queue))
+    if (is_empty(queue))
         return;
     queue->front = (queue->front + 1)
                    % queue->capacity;
     queue->size = queue->size - 1;
 }
 
-struct Command* front(struct Queue* queue){
+/*!
+* @brief get front of queue
+*
+* @param[in] queue: pointer to the queue object
+*
+* @return item at front of queue
+*/
+command_t* front(queue_t* queue){
     return &queue->array[queue->front];
 }

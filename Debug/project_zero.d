@@ -96,9 +96,9 @@ project_zero.obj: ../Profile/led_service.h
 project_zero.obj: ../Profile/profile_util.h
 project_zero.obj: ../Profile/button_service.h
 project_zero.obj: ../Profile/data_service.h
-project_zero.obj: ../coordinateProcessing.h
-project_zero.obj: ../command.h
+project_zero.obj: ../coordinate_processing_task.h
 project_zero.obj: ../queue.h
+project_zero.obj: ../command.h
 
 ../project_zero.c: 
 C:/ti/ccs1020/ccs/tools/compiler/ti-cgt-arm_20.2.2.LTS/include/string.h: 
@@ -196,6 +196,6 @@ C:/ti/simplelink_msp432e4_sdk_3_20_00_10/source/ti/drivers/Watchdog.h:
 ../Profile/profile_util.h: 
 ../Profile/button_service.h: 
 ../Profile/data_service.h: 
-../coordinateProcessing.h: 
-../command.h: 
+../coordinate_processing_task.h: 
 ../queue.h: 
+../command.h: 

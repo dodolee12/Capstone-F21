@@ -13,12 +13,12 @@ ORDERED_OBJS += \
 "./MSP_EXP432E401Y.obj" \
 "./cc2640r2lp_simple_np_uart_pm_sbl.obj" \
 "./command.obj" \
-"./coordinateProcessing.obj" \
+"./coordinate_processing_task.obj" \
 "./main_tirtos.obj" \
 "./platform_msp432e401y.obj" \
 "./project_zero.obj" \
 "./queue.obj" \
-"./testTask.obj" \
+"./test_task.obj" \
 "./Profile/button_service.obj" \
 "./Profile/data_service.obj" \
 "./Profile/led_service.obj" \
@@ -187,8 +187,8 @@ project_zero_MSP_EXP432E401Y_tirtos_ccs.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "MSP_EXP432E401Y.obj" "cc2640r2lp_simple_np_uart_pm_sbl.obj" "command.obj" "coordinateProcessing.obj" "main_tirtos.obj" "platform_msp432e401y.obj" "project_zero.obj" "queue.obj" "testTask.obj" "Profile\button_service.obj" "Profile\data_service.obj" "Profile\led_service.obj" "Profile\profile_util.obj" "sbl\sbl.obj" "sbl\sbl_cmd.obj" "sbl\sbl_image_int.obj" "sbl\sbl_simplelink.obj" "sbl\sbl_tl.obj" 
-	-$(RM) "MSP_EXP432E401Y.d" "cc2640r2lp_simple_np_uart_pm_sbl.d" "command.d" "coordinateProcessing.d" "main_tirtos.d" "platform_msp432e401y.d" "project_zero.d" "queue.d" "testTask.d" "Profile\button_service.d" "Profile\data_service.d" "Profile\led_service.d" "Profile\profile_util.d" "sbl\sbl.d" "sbl\sbl_cmd.d" "sbl\sbl_image_int.d" "sbl\sbl_simplelink.d" "sbl\sbl_tl.d" 
+	-$(RM) "MSP_EXP432E401Y.obj" "cc2640r2lp_simple_np_uart_pm_sbl.obj" "command.obj" "coordinate_processing_task.obj" "main_tirtos.obj" "platform_msp432e401y.obj" "project_zero.obj" "queue.obj" "test_task.obj" "Profile\button_service.obj" "Profile\data_service.obj" "Profile\led_service.obj" "Profile\profile_util.obj" "sbl\sbl.obj" "sbl\sbl_cmd.obj" "sbl\sbl_image_int.obj" "sbl\sbl_simplelink.obj" "sbl\sbl_tl.obj" 
+	-$(RM) "MSP_EXP432E401Y.d" "cc2640r2lp_simple_np_uart_pm_sbl.d" "command.d" "coordinate_processing_task.d" "main_tirtos.d" "platform_msp432e401y.d" "project_zero.d" "queue.d" "test_task.d" "Profile\button_service.d" "Profile\data_service.d" "Profile\led_service.d" "Profile\profile_util.d" "sbl\sbl.d" "sbl\sbl_cmd.d" "sbl\sbl_image_int.d" "sbl\sbl_simplelink.d" "sbl\sbl_tl.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

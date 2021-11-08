@@ -59,7 +59,7 @@
 #include "Profile/led_service.h"
 #include "Profile/button_service.h"
 #include "Profile/data_service.h"
-#include "coordinateProcessing.h"
+#include "coordinate_processing_task.h"
 #include "command.h"
 #include "queue.h"
 
@@ -1239,59 +1239,64 @@ static void ProjectZero_processButtonServicecccdCB(uint8_t charID,
 
 /*
  * Callbacks for the Data Service
+ * Obtains the coordinate that was written via BLE and appends it to the queue defined in coordinate_processing_task.h
+ *
+ * String parses coordinate and expects input to be "Start" or "Lift Pen" or "Finish" or "(x,y)"
+ *
+ * TODO: Add buffer filled logic
  */
 
 //0x00 is string storage, 0x10 is string stream
 static void ProjectZero_processDataServiceCB(uint8_t charID)
 {
     //get current coordinate
-    char* newCoord = malloc(40*sizeof(char));
-    DataService_getParameter(STRING_STORAGE_PARAM,newCoord);
+    char* new_coord = malloc(40*sizeof(char));
+    DataService_getParameter(STRING_STORAGE_PARAM,new_coord);
 
-    struct Command* command;
-    if(strncmp(newCoord,"Start",5) == 0){
-        command = createCommand(0,0,START);
+    command_t* command;
+    if(strncmp(new_coord,"Start",5) == 0){
+        command = create_command(0,0,START);
     }
-    else if(strncmp(newCoord,"Lift Pen",8) == 0){
-        command = createCommand(0,0,LIFT_PEN);
+    else if(strncmp(new_coord,"Lift Pen",8) == 0){
+        command = create_command(0,0,LIFT_PEN);
     }
-    else if(strncmp(newCoord,"Finish",6) == 0){
-        command = createCommand(0,0,STOP);
+    else if(strncmp(new_coord,"Finish",6) == 0){
+        command = create_command(0,0,STOP);
     }
     else{
         //parse input coord
         char* xcoord = malloc(5*sizeof(char));
         char* ycoord = malloc(5*sizeof(char));
         int comma = 0;
-        int len = strlen(newCoord);
+        int len = strlen(new_coord);
         int i;
         for(i = 1; i < len - 1; ++i){
-            if(newCoord[i] == ','){
+            if(new_coord[i] == ','){
                 comma = i;
                 break;
             }
         }
 
-        memcpy(xcoord,&newCoord[1],comma - 1);
-        memcpy(ycoord,&newCoord[comma + 1],len - comma - 2);
+        memcpy(xcoord,&new_coord[1],comma - 1);
+        memcpy(ycoord,&new_coord[comma + 1],len - comma - 2);
 
         int x = atoi(xcoord);
         int y = atoi(ycoord);
-        command = createCommand(x,y,COORDINATE);
+        command = create_command(x,y,COORDINATE);
         free(xcoord);
         free(ycoord);
     }
 
-    pthread_mutex_lock(&queueLock);
-    enQueue(coordQueue,*command);
-    pthread_mutex_unlock(&queueLock);
-    pthread_cond_signal(&queueNotEmpty);
+    pthread_mutex_lock(&queue_lock);
+    enqueue(coord_queue,*command);
+    pthread_mutex_unlock(&queue_lock);
+    pthread_cond_signal(&queue_not_empty);
 
 
     //be ready for next coord
     DataService_setParameter(STRING_STORAGE_PARAM,strlen(READY_STATE),READY_STATE);
 
-    free(newCoord);
+    free(new_coord);
 }
 
 static void ProjectZero_processDataServicecccdCB(uint8_t charID, uint16_t value)

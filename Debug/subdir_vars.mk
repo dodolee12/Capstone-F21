@@ -12,66 +12,66 @@ C_SRCS += \
 ../MSP_EXP432E401Y.c \
 C:/ti/simplelink_sdk_ble_plugin_3_20_00_24/source/ti/snp/blestack/c-array/cc2640r2lp_simple_np_uart_pm_sbl.c \
 ../command.c \
-../coordinateProcessing.c \
+../coordinate_processing_task.c \
 ../main_tirtos.c \
 ../platform_msp432e401y.c \
 ../project_zero.c \
 ../queue.c \
-../testTask.c 
+../test_task.c 
 
 C_DEPS += \
 ./MSP_EXP432E401Y.d \
 ./cc2640r2lp_simple_np_uart_pm_sbl.d \
 ./command.d \
-./coordinateProcessing.d \
+./coordinate_processing_task.d \
 ./main_tirtos.d \
 ./platform_msp432e401y.d \
 ./project_zero.d \
 ./queue.d \
-./testTask.d 
+./test_task.d 
 
 OBJS += \
 ./MSP_EXP432E401Y.obj \
 ./cc2640r2lp_simple_np_uart_pm_sbl.obj \
 ./command.obj \
-./coordinateProcessing.obj \
+./coordinate_processing_task.obj \
 ./main_tirtos.obj \
 ./platform_msp432e401y.obj \
 ./project_zero.obj \
 ./queue.obj \
-./testTask.obj 
+./test_task.obj 
 
 OBJS__QUOTED += \
 "MSP_EXP432E401Y.obj" \
 "cc2640r2lp_simple_np_uart_pm_sbl.obj" \
 "command.obj" \
-"coordinateProcessing.obj" \
+"coordinate_processing_task.obj" \
 "main_tirtos.obj" \
 "platform_msp432e401y.obj" \
 "project_zero.obj" \
 "queue.obj" \
-"testTask.obj" 
+"test_task.obj" 
 
 C_DEPS__QUOTED += \
 "MSP_EXP432E401Y.d" \
 "cc2640r2lp_simple_np_uart_pm_sbl.d" \
 "command.d" \
-"coordinateProcessing.d" \
+"coordinate_processing_task.d" \
 "main_tirtos.d" \
 "platform_msp432e401y.d" \
 "project_zero.d" \
 "queue.d" \
-"testTask.d" 
+"test_task.d" 
 
 C_SRCS__QUOTED += \
 "../MSP_EXP432E401Y.c" \
 "C:/ti/simplelink_sdk_ble_plugin_3_20_00_24/source/ti/snp/blestack/c-array/cc2640r2lp_simple_np_uart_pm_sbl.c" \
 "../command.c" \
-"../coordinateProcessing.c" \
+"../coordinate_processing_task.c" \
 "../main_tirtos.c" \
 "../platform_msp432e401y.c" \
 "../project_zero.c" \
 "../queue.c" \
-"../testTask.c" 
+"../test_task.c" 
 
 

@@ -1,3 +1,9 @@
+/** @file command.h
+*
+* @brief A struct defined for the command given to the micro-controller
+*
+*/
+
 #ifndef COMMAND_H
 #define COMMAND_H
 
@@ -8,13 +14,12 @@ typedef enum {
     STOP,
 } command_type;
 
-struct Command{
+typedef struct {
     int x;
     int y;
     command_type type; //1 is start, 2 is lift pen, 3 is stop
-};
+} command_t;
 
-
-struct Command* createCommand(int x, int y, command_type type);
+command_t* create_command(int x, int y, command_type type);
 
 #endif
