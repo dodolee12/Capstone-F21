@@ -17,7 +17,7 @@
  * @return  None.
  ******************************************************************************/
 void coordinate_processing_create_task(){
-    coord_queue = create_queue(15000);
+    coord_queue = create_queue(10000);
     pthread_mutex_init(&queue_lock,NULL);
     pthread_cond_init(&queue_not_empty,NULL);
 
@@ -51,7 +51,7 @@ void coordinate_processing_create_task(){
     }
 
 
-    retc = pthread_create(&thread, &pAttrs, process_queue_task_fxn, NULL);
+    retc = pthread_create(&thread, &pAttrs, &process_queue_task_fxn, NULL);
 
     if (retc != 0)
     {
@@ -66,7 +66,7 @@ void coordinate_processing_create_task(){
  * @brief   Application task entry point for processing buffered coordinates.
  *
  ******************************************************************************/
-static void* process_queue_task_fxn(void* args){
+void* process_queue_task_fxn(void* args){
 
     //application loop
     while(1){

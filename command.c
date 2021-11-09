@@ -16,7 +16,7 @@
 *
 * @return The created command_t object
 */
-command_t* create_command(int x, int y, command_type type){
+command_t* create_command(uint16_t x, uint16_t y, command_type type){
     command_t* command = (command_t*) malloc(sizeof(command_t));
     command->x = x;
     command->y = y;

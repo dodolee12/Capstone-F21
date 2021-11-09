@@ -98,7 +98,7 @@ int main(void)
     coordinate_processing_create_task();
 
     /* Test Task */
-    test_create_task();
+    //test_create_task();
 
     /* Enable interrupts and start SYS/BIOS */
     BIOS_start();
