@@ -102,6 +102,8 @@ extern "C" {
 
 /* GPIO Pins */
 #define Board_PH0                   MSP_EXP432E401Y_PH0
+#define Board_PM6                   MSP_EXP432E401Y_PM6
+#define Board_PQ1                   MSP_EXP432E401Y_PQ1
 
 /* Board specific I2C addresses */
 #define Board_TMP_ADDR              (0x40)

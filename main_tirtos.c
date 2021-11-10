@@ -66,7 +66,11 @@ void NDK_hookInit(int32_t id) {}
  */
 Display_Handle displayOut;
 
-void* threadTask(void* arguments);
+void test_callback(uint_least8_t index)
+{
+    /* Toggle an LED */
+    GPIO_toggle(Board_LED0);
+}
 
 int main(void)
 {
@@ -76,6 +80,14 @@ int main(void)
     PWM_init();
     UART_init();
     Timer_init();
+
+    //setup gpio interrupt
+    /* Install Button callback */
+    GPIO_setCallback(Board_PQ1, test_callback);
+
+    /* Enable interrupts */
+    GPIO_enableInt(Board_PQ1);
+
 
     /* Open the display for output */
     displayOut = Display_open(Display_Type_UART | Display_Type_HOST, NULL);

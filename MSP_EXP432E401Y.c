@@ -413,6 +413,9 @@ GPIO_PinConfig gpioPinConfigs[] = {
 
     /* GPIO for use */
     GPIOMSP432E4_PH0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+    GPIOMSP432E4_PM6 | GPIO_CFG_IN_PU,
+    GPIOMSP432E4_PQ1 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
+
 
     /* Sharp Display - GPIO configurations will be done in the Display files */
     GPIOMSP432E4_PE5 | GPIO_DO_NOT_CONFIG, /* SPI chip select */

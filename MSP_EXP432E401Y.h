@@ -106,6 +106,8 @@ typedef enum MSP_EXP432E401Y_GPIOName {
 
     /* Custom GPIO Pins */
     MSP_EXP432E401Y_PH0,
+    MSP_EXP432E401Y_PM6,
+    MSP_EXP432E401Y_PQ1,
 
     /* Sharp 96x96 LCD Pins */
     MSP_EXP432E401Y_LCD_CS,

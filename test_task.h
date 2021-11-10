@@ -11,7 +11,7 @@
 #include <pthread.h>
 
 #define TEST_PRIORITY 1
-#define TEST_STACK_SIZE 32768
+#define TEST_STACK_SIZE 2048
 
 pthread_t thread;
 
