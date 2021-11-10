@@ -72,6 +72,17 @@ void test_callback(uint_least8_t index)
     GPIO_toggle(Board_LED0);
 }
 
+/*
+ * This callback is called every 1,000,000 microseconds, or 1 second. Because
+ * the LED is toggled each time this function is called, the LED will blink at
+ * a rate of once every 2 seconds.
+ */
+void timerCallback(Timer_Handle myHandle, int_fast16_t status)
+{
+    GPIO_toggle(Board_PH0);
+}
+
+
 int main(void)
 {
     /* Call board initialization functions */
@@ -88,6 +99,28 @@ int main(void)
     /* Enable interrupts */
     GPIO_enableInt(Board_PQ1);
 
+    //timer interrupt
+
+    Timer_Handle timer0;
+    Timer_Params params;
+
+    Timer_Params_init(&params);
+    params.period = 1000000;
+    params.periodUnits = Timer_PERIOD_US;
+    params.timerMode = Timer_CONTINUOUS_CALLBACK;
+    params.timerCallback = timerCallback;
+
+    timer0 = Timer_open(MSP_EXP432E401Y_TIMER3, &params);
+
+    if (timer0 == NULL) {
+        /* Failed to initialized timer */
+        while (1) {}
+    }
+
+    if (Timer_start(timer0) == Timer_STATUS_ERROR) {
+        /* Failed to start timer */
+        while (1) {}
+    }
 
     /* Open the display for output */
     displayOut = Display_open(Display_Type_UART | Display_Type_HOST, NULL);

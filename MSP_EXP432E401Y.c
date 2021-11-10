@@ -412,8 +412,13 @@ GPIO_PinConfig gpioPinConfigs[] = {
     GPIOMSP432E4_PF3 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_HIGH,
 
     /* GPIO for use */
+    /* MSP_EXP432E401Y_PH0 */
     GPIOMSP432E4_PH0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PM6 */
     GPIOMSP432E4_PM6 | GPIO_CFG_IN_PU,
+
+    /* MSP_EXP432E401Y_PQ1 */
     GPIOMSP432E4_PQ1 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
 
 
@@ -434,7 +439,15 @@ GPIO_CallbackFxn gpioCallbackFunctions[] = {
     NULL,  /* MSP_EXP432E401Y_USR_SW1 */
     NULL,  /* MSP_EXP432E401Y_USR_SW2 */
     NULL,  /* MSP_EXP432E401Y_SRDY */
-    NULL   /* MSP_EXP432E401Y_MRDY */
+    NULL,   /* MSP_EXP432E401Y_MRDY */
+    NULL,  /* MSP_EXP432E401Y_RESET */
+    NULL,  /* MSP_EXP432E401Y_USR_D1 */
+    NULL,  /* MSP_EXP432E401Y_USR_D2 */
+    NULL,  /* MSP_EXP432E401Y_SDSPI_CS */
+    NULL,  /* MSP_EXP432E401Y_PH0 */
+    NULL,  /* MSP_EXP432E401Y_PM6 */
+    NULL,  /* MSP_EXP432E401Y_PQ1 */
+
 };
 
 /* The device-specific GPIO_config structure */
@@ -723,6 +736,12 @@ const TimerMSP432E4_HWAttrs timerMSP432E4HWAttrs[MSP_EXP432E401Y_TIMERCOUNT] = {
          .intNum = INT_TIMER1B,
          .intPriority = ~0
     },
+    {
+        .baseAddress = TIMER3_BASE,
+        .subTimer    = TimerMSP432E4_timer32,
+        .intNum      = INT_TIMER3A,
+        .intPriority = (~0)
+    },
 };
 
 const Timer_Config Timer_config[MSP_EXP432E401Y_TIMERCOUNT] = {
@@ -740,6 +759,11 @@ const Timer_Config Timer_config[MSP_EXP432E401Y_TIMERCOUNT] = {
         .fxnTablePtr = &TimerMSP432E4_fxnTable,
         .object = &timerMSP432E4Objects[MSP_EXP432E401Y_TIMER2],
         .hwAttrs = &timerMSP432E4HWAttrs[MSP_EXP432E401Y_TIMER2]
+    },
+    {
+        .fxnTablePtr = &TimerMSP432E4_fxnTable,
+        .object      = &timerMSP432E4Objects[MSP_EXP432E401Y_TIMER3],
+        .hwAttrs     = &timerMSP432E4HWAttrs[MSP_EXP432E401Y_TIMER3]
     },
 };
 
