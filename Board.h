@@ -102,8 +102,23 @@ extern "C" {
 
 /* GPIO Pins */
 #define Board_PH0                   MSP_EXP432E401Y_PH0
+#define Board_PM2                   MSP_EXP432E401Y_PM2
+#define Board_PM0                   MSP_EXP432E401Y_PM0
+#define Board_PM1                   MSP_EXP432E401Y_PM1
 #define Board_PM6                   MSP_EXP432E401Y_PM6
 #define Board_PQ1                   MSP_EXP432E401Y_PQ1
+#define Board_PK1                   MSP_EXP432E401Y_PK1
+#define Board_PK2                   MSP_EXP432E401Y_PK2
+#define Board_PM7                   MSP_EXP432E401Y_PM7
+#define Board_PP1                   MSP_EXP432E401Y_PP1
+#define Board_PD2                   MSP_EXP432E401Y_PD2
+#define Board_PQ0                   MSP_EXP432E401Y_PQ0
+#define Board_PP4                   MSP_EXP432E401Y_PP4
+#define Board_PN5                   MSP_EXP432E401Y_PN5
+#define Board_PN4                   MSP_EXP432E401Y_PN4
+#define Board_PD5                   MSP_EXP432E401Y_PD5
+#define Board_PP0                   MSP_EXP432E401Y_PP0
+#define Board_PD4                   MSP_EXP432E401Y_PD4
 
 /* Board specific I2C addresses */
 #define Board_TMP_ADDR              (0x40)

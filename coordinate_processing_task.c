@@ -1,8 +1,12 @@
 #include <stdlib.h>
+#include <ti/drivers/GPIO.h>
 
 #include "coordinate_processing_task.h"
 #include "queue.h"
 #include "command.h"
+#include "pin_inits.h"
+#include "Board.h"
+
 
 /*******************************************************************************
  *                                 PUBLIC FUNCTIONS
@@ -80,6 +84,25 @@ void* process_queue_task_fxn(void* args){
 
         //Process coord
         volatile int a = 3;
+        //check lift pen command
+        switch(next_coord->type){
+            case COORDINATE:
+
+                stop_motor1();
+                initialize_motor1_timer(next_coord->x);
+                start_motor1();
+
+
+                //Write 0 to solenoid driver input just in case and stop PWM if it exists
+                GPIO_write(Board_PK1,0);
+                stop_output_solenoid_duty_cycle_adjust();
+            break;
+            case LIFT_PEN:
+                //Write 1 to solenoid driver input (PK1) and start PWM on PK2;
+                GPIO_write(Board_PK1,1);
+                output_solenoid_duty_cycle_adjust();
+            break;
+        }
 
     }
 }

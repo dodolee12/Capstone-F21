@@ -47,6 +47,7 @@
 #include "Profile/data_service.h"
 #include "test_task.h"
 #include "coordinate_processing_task.h"
+#include "pin_inits.h"
 
 /*
  * The following (weak) function definition is needed in applications
@@ -72,15 +73,6 @@ void test_callback(uint_least8_t index)
     GPIO_toggle(Board_LED0);
 }
 
-/*
- * This callback is called every 1,000,000 microseconds, or 1 second. Because
- * the LED is toggled each time this function is called, the LED will blink at
- * a rate of once every 2 seconds.
- */
-void timerCallback(Timer_Handle myHandle, int_fast16_t status)
-{
-    GPIO_toggle(Board_PH0);
-}
 
 
 int main(void)
@@ -92,6 +84,11 @@ int main(void)
     UART_init();
     Timer_init();
 
+    /* Solenoid driver duty cycle adjust init */
+    initialize_PWM_timer();
+    initialize_motor1_timer(100);
+    initialize_switch1_interrupt();
+
     //setup gpio interrupt
     /* Install Button callback */
     GPIO_setCallback(Board_PQ1, test_callback);
@@ -99,28 +96,8 @@ int main(void)
     /* Enable interrupts */
     GPIO_enableInt(Board_PQ1);
 
-    //timer interrupt
+    set_pin_config_output_high(Board_PP1);
 
-    Timer_Handle timer0;
-    Timer_Params params;
-
-    Timer_Params_init(&params);
-    params.period = 1000000;
-    params.periodUnits = Timer_PERIOD_US;
-    params.timerMode = Timer_CONTINUOUS_CALLBACK;
-    params.timerCallback = timerCallback;
-
-    timer0 = Timer_open(MSP_EXP432E401Y_TIMER3, &params);
-
-    if (timer0 == NULL) {
-        /* Failed to initialized timer */
-        while (1) {}
-    }
-
-    if (Timer_start(timer0) == Timer_STATUS_ERROR) {
-        /* Failed to start timer */
-        while (1) {}
-    }
 
     /* Open the display for output */
     displayOut = Display_open(Display_Type_UART | Display_Type_HOST, NULL);
@@ -143,7 +120,7 @@ int main(void)
     coordinate_processing_create_task();
 
     /* Test Task */
-    //test_create_task();
+    test_create_task();
 
     /* Enable interrupts and start SYS/BIOS */
     BIOS_start();

@@ -415,12 +415,56 @@ GPIO_PinConfig gpioPinConfigs[] = {
     /* MSP_EXP432E401Y_PH0 */
     GPIOMSP432E4_PH0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
 
-    /* MSP_EXP432E401Y_PM6 */
-    GPIOMSP432E4_PM6 | GPIO_CFG_IN_PU,
+    /* MSP_EXP432E401Y_PM2 (Switch 1 Interrupt) */
+    GPIOMSP432E4_PM2 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
+
+    /* MSP_EXP432E401Y_PM0 (Switch 2 Interrupt) */
+    GPIOMSP432E4_PM0 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
+
+    /* MSP_EXP432E401Y_PM1 (Switch 3 Interrupt) */
+    GPIOMSP432E4_PM1 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
+
+    /* MSP_EXP432E401Y_PM6 (Switch 4 Interrupt) */
+    GPIOMSP432E4_PM6 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
 
     /* MSP_EXP432E401Y_PQ1 */
     GPIOMSP432E4_PQ1 | GPIO_CFG_IN_PU | GPIO_CFG_IN_INT_FALLING,
 
+    /* MSP_EXP432E401Y_PK1 (Solenoid Driver Input) */
+    GPIOMSP432E4_PK1 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PK2 (Solenoid Driver Duty Cycle Adjust) */
+    GPIOMSP432E4_PK2 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PM7 (Solenoid Driver Input Status OK) */
+    GPIOMSP432E4_PM7 | GPIO_CFG_IN_PU,
+
+    /* MSP_EXP432E401Y_PP1 (Stepper Motor 1 Enable) */
+    GPIOMSP432E4_PP1 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PD2 (Stepper Motor 1 M1) */
+    GPIOMSP432E4_PD2 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PQ0 (Stepper Motor 1 Decay0) */
+    GPIOMSP432E4_PQ0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PP4 (Stepper Motor 1 Decay1) */
+    GPIOMSP432E4_PP4 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PN5 (Stepper Motor 1 Toff) */
+    GPIOMSP432E4_PN5 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PN4 (Stepper Motor 1 M0) */
+    GPIOMSP432E4_PN4 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PD5 (Stepper Motor 1 Step) */
+    GPIOMSP432E4_PD5 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PP0 (Stepper Motor 1 Nsleep) */
+    GPIOMSP432E4_PP0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
+
+    /* MSP_EXP432E401Y_PD4 (Stepper Motor 1 Direction) */
+    GPIOMSP432E4_PD4 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_LOW,
 
     /* Sharp Display - GPIO configurations will be done in the Display files */
     GPIOMSP432E4_PE5 | GPIO_DO_NOT_CONFIG, /* SPI chip select */
@@ -738,8 +782,14 @@ const TimerMSP432E4_HWAttrs timerMSP432E4HWAttrs[MSP_EXP432E401Y_TIMERCOUNT] = {
     },
     {
         .baseAddress = TIMER3_BASE,
-        .subTimer    = TimerMSP432E4_timer32,
+        .subTimer    = TimerMSP432E4_timer16A,
         .intNum      = INT_TIMER3A,
+        .intPriority = (~0)
+    },
+    {
+        .baseAddress = TIMER3_BASE,
+        .subTimer    = TimerMSP432E4_timer16B,
+        .intNum      = INT_TIMER3B,
         .intPriority = (~0)
     },
 };
@@ -764,6 +814,11 @@ const Timer_Config Timer_config[MSP_EXP432E401Y_TIMERCOUNT] = {
         .fxnTablePtr = &TimerMSP432E4_fxnTable,
         .object      = &timerMSP432E4Objects[MSP_EXP432E401Y_TIMER3],
         .hwAttrs     = &timerMSP432E4HWAttrs[MSP_EXP432E401Y_TIMER3]
+    },
+    {
+        .fxnTablePtr = &TimerMSP432E4_fxnTable,
+        .object      = &timerMSP432E4Objects[MSP_EXP432E401Y_TIMER4],
+        .hwAttrs     = &timerMSP432E4HWAttrs[MSP_EXP432E401Y_TIMER4]
     },
 };
 

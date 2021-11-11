@@ -1,3 +1,8 @@
+/** @file coordinate_processing_task.h
+*
+* @brief The coordinate processing thread
+*
+*/
 #ifndef COORDINATE_PROCESSING_TASK_H
 #define COORDINATE_PROCESSING_TASK_H
 

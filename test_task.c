@@ -55,9 +55,5 @@ void test_create_task(){
 
 //DO ALL TESTING HERE
 void* test_method(void* args){
-    while(1){
-        GPIO_write(Board_PH0,1);
-        volatile int a = 3;
-    }
-
+    ;
 }
