@@ -9,11 +9,15 @@
 
 #include <stdint.h>
 
+/**
+ * Type of command sent
+ */
 typedef enum {
     COORDINATE,
     START,
     LIFT_PEN,
     STOP,
+    TEST,
 } command_type;
 
 typedef struct {

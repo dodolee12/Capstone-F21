@@ -1263,6 +1263,9 @@ static void ProjectZero_processDataServiceCB(uint8_t charID)
     else if(strncmp(new_coord,"Finish",6) == 0){
         command = create_command(0,0,STOP);
     }
+    else if(strncmp(new_coord,"Test",4) == 0){
+        command = create_command(0,0,TEST);
+    }
     else{
         //parse input coord
         char* xcoord = malloc(5*sizeof(char));
@@ -1279,6 +1282,9 @@ static void ProjectZero_processDataServiceCB(uint8_t charID)
 
         memcpy(xcoord,&new_coord[1],comma - 1);
         memcpy(ycoord,&new_coord[comma + 1],len - comma - 2);
+
+        xcoord[comma - 1] = '\0';
+        ycoord[len - comma - 2] = '\0';
 
         int x = atoi(xcoord);
         int y = atoi(ycoord);

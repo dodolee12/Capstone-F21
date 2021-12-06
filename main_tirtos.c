@@ -67,14 +67,6 @@ void NDK_hookInit(int32_t id) {}
  */
 Display_Handle displayOut;
 
-void test_callback(uint_least8_t index)
-{
-    /* Toggle an LED */
-    GPIO_toggle(Board_LED0);
-}
-
-
-
 int main(void)
 {
     /* Call board initialization functions */
@@ -84,20 +76,12 @@ int main(void)
     UART_init();
     Timer_init();
 
-    /* Solenoid driver duty cycle adjust init */
-    initialize_PWM_timer();
-    initialize_motor1_timer(100);
     initialize_switch1_interrupt();
-
-    //setup gpio interrupt
-    /* Install Button callback */
-    GPIO_setCallback(Board_PQ1, test_callback);
-
-    /* Enable interrupts */
-    GPIO_enableInt(Board_PQ1);
-
-    set_pin_config_output_high(Board_PP1);
-
+    initialize_switch2_interrupt();
+    initialize_switch3_interrupt();
+    initialize_switch4_interrupt();
+    initialize_motor_timer();
+    disable_solenoid();
 
     /* Open the display for output */
     displayOut = Display_open(Display_Type_UART | Display_Type_HOST, NULL);

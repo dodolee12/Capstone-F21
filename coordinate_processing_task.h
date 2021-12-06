@@ -11,6 +11,9 @@
 
 #define COORDINATE_PROCESSING_PRIORITY 2
 #define COORDINATE_PROCESSING_STACK_SIZE 4096
+#define BASE_MOTOR_SPEED 120 // pixels per sec
+#define BASE_MOTOR_FREQUENCY 1000
+#define TIME_PER_COORDINATE 0.001  // time per coordinate in sec (1ms)
 
 pthread_t thread;
 

@@ -1,5 +1,13 @@
+/** @file coordinate_processing_task.c
+*
+* @brief The coordinate processing thread implementation
+*
+*/
+
 #include <stdlib.h>
+#include <stdbool.h>
 #include <ti/drivers/GPIO.h>
+#include <unistd.h>
 
 #include "coordinate_processing_task.h"
 #include "queue.h"
@@ -7,6 +15,7 @@
 #include "pin_inits.h"
 #include "Board.h"
 
+extern bool printer_free;
 
 /*******************************************************************************
  *                                 PUBLIC FUNCTIONS
@@ -72,6 +81,10 @@ void coordinate_processing_create_task(){
  ******************************************************************************/
 void* process_queue_task_fxn(void* args){
 
+    //Previous x and y coordinates for calculating slope
+    int prevx = 0;
+    int prevy = 1000;
+
     //application loop
     while(1){
         pthread_mutex_lock(&queue_lock);
@@ -82,25 +95,130 @@ void* process_queue_task_fxn(void* args){
         dequeue(coord_queue);
         pthread_mutex_unlock(&queue_lock);
 
-        //Process coord
-        volatile int a = 3;
+        //process coord
+
+
         //check lift pen command
         switch(next_coord->type){
+            case START:
+                //lift pen before calibrating
+
+                //Then move to 0,0 by triggering interrupts
+                prevx = 0;
+                prevy = 0;
+            break;
             case COORDINATE:
 
-                stop_motor1();
-                initialize_motor1_timer(next_coord->x);
-                start_motor1();
+                //Step 1: calculate the slope
+                //if slope is < 1/32 or > 32, then stall certain motor
+                //if less than 1/32, we draw horizontal line, if greater than 32, then draw vertical line
+                //Reference: took 16 sec to move 1920 pixels on 1khz, this is 120pixels/sec
+                //find the smaller change in x or y, this will be the base which is 2khz aka 240 pixels/s
+                //find time it takes to travel x coordinates so deltax/240
+                //then find period
+                //direction is set by sign
+                //microstepping is set by magnitude
 
 
-                //Write 0 to solenoid driver input just in case and stop PWM if it exists
-                GPIO_write(Board_PK1,0);
-                stop_output_solenoid_duty_cycle_adjust();
+                //lets make motor1 x axis and motor2 y axis
+
+                //calculate configurations on both x and y motors
+                ;
+                int newx = next_coord->x;
+                int newy = next_coord->y;
+                if(newy == prevy && newx == prevx){
+                    printer_free = true;
+                    break;
+                }
+                double slope;
+                if(newy == prevy){
+                    slope = (newx - prevx < 0 ? -1 : 1) * 1.0/100;
+                }
+                else if(newx == prevx){
+                    slope = (newy - prevy < 0 ? -1 : 1) * 100;
+                }
+                else{
+                    slope = (double) (newy - prevy) / (newx - prevx);
+                }
+
+                //SINCE MOTOR FULL STEPPING DOSENT WORK FOR NOW LETS LIMIT TO 1/16 and 16
+
+                //if between -1 and 1 then delta y is smaller
+                if(slope <= 1 && slope >= -1){
+
+                    //if the slope is too small for noticeable change, we can draw horizontal line otherwise set y motor speed
+                    if(slope < 1.0/16 && slope > -1.0/16){
+                        //dont turn on y motor
+                        //set x motor as base motor
+                        int deltax = newx - prevx;
+                        double time = (double) deltax/BASE_MOTOR_SPEED*1000000; //time to keep motor on at 2khz in us (240 pixels/sec)
+                        start_motor1(BASE_MOTOR_FREQUENCY,deltax > 0 ? RIGHT : LEFT,SIXTEENTH); // base motor settings
+                        intialize_and_start_motor_timer(time,1); // only motor 1 is on
+                        //usleep(abs(time));
+                    }
+                    else{
+                        //base motor is y motor
+                        int deltay = newy - prevy;
+                        int deltax = newx - prevx;
+                        double time = (double) deltay/BASE_MOTOR_SPEED*1000000; //time to keep motor on at 2khz in us (240 pixels/sec)
+                        //now determine freq and microstepping in motor1
+                        double motor1_freq = (double) BASE_MOTOR_FREQUENCY/slope;
+                        microstep_t microstep = SIXTEENTH;
+                        while(motor1_freq > 4000){
+                            motor1_freq /= 2;
+                            --microstep;
+                        }
+                        start_motor2(BASE_MOTOR_FREQUENCY*1,deltay > 0 ? RIGHT : LEFT,SIXTEENTH); // base motor settings
+                        start_motor1(motor1_freq,deltax > 0 ? RIGHT : LEFT,microstep); // base motor settings
+                        intialize_and_start_motor_timer(time,0); // both motors on
+                    }
+
+                }
+                else{
+                    //check if vertical line
+                    if(slope < -16 || slope > 16){
+                        //only y motor
+                        int deltay = newy - prevy;
+                        double time = (double) deltay/BASE_MOTOR_SPEED*1000000; //time to keep motor on at 2khz in us (240 pixels/sec)
+                        start_motor2(BASE_MOTOR_FREQUENCY*1,deltay > 0 ? RIGHT : LEFT,SIXTEENTH); // base motor settings
+                        intialize_and_start_motor_timer(time,2); // only motor 2 is on
+                    }
+                    else{
+                        //base motor is x motor
+                        int deltax = newx - prevx;
+                        int deltay = newy - prevy;
+                        double time = (double) deltax/BASE_MOTOR_SPEED*1000000; //time to keep motor on at 2khz in us (240 pixels/sec)
+                        //now determine freq and microstepping in motor1
+                        double motor2_freq = (double) BASE_MOTOR_FREQUENCY*slope*1;
+                        microstep_t microstep = SIXTEENTH;
+                        while(motor2_freq > 4000){
+                            motor2_freq /= 2;
+                            --microstep;
+                        }
+                        start_motor1(BASE_MOTOR_FREQUENCY,deltax > 0 ? RIGHT : LEFT,SIXTEENTH); // base motor settings
+                        start_motor2(motor2_freq,deltay > 0 ? RIGHT : LEFT,microstep); // base motor settings
+                        intialize_and_start_motor_timer(time,0); // both motors on
+                    }
+                }
+
+                prevx = newx;
+                prevy = newy;
+
+                enable_solenoid();
             break;
             case LIFT_PEN:
-                //Write 1 to solenoid driver input (PK1) and start PWM on PK2;
-                GPIO_write(Board_PK1,1);
-                output_solenoid_duty_cycle_adjust();
+                disable_solenoid();
+                usleep(100000);
+            break;
+            case STOP:
+                //do the same as start: lift pen, move to 0,0
+                prevx = 0;
+                prevy = 0;
+            break;
+            case TEST:
+                //random stuff for testing
+                start_motor1(BASE_MOTOR_FREQUENCY,RIGHT,HALF);
+                intialize_and_start_motor_timer(1000000,1);
             break;
         }
 

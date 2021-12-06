@@ -101,24 +101,23 @@ extern "C" {
 #define Board_WATCHDOG0             MSP_EXP432E401Y_WATCHDOG0
 
 /* GPIO Pins */
-#define Board_PH0                   MSP_EXP432E401Y_PH0
-#define Board_PM2                   MSP_EXP432E401Y_PM2
-#define Board_PM0                   MSP_EXP432E401Y_PM0
-#define Board_PM1                   MSP_EXP432E401Y_PM1
-#define Board_PM6                   MSP_EXP432E401Y_PM6
-#define Board_PQ1                   MSP_EXP432E401Y_PQ1
-#define Board_PK1                   MSP_EXP432E401Y_PK1
-#define Board_PK2                   MSP_EXP432E401Y_PK2
-#define Board_PM7                   MSP_EXP432E401Y_PM7
-#define Board_PP1                   MSP_EXP432E401Y_PP1
-#define Board_PD2                   MSP_EXP432E401Y_PD2
-#define Board_PQ0                   MSP_EXP432E401Y_PQ0
-#define Board_PP4                   MSP_EXP432E401Y_PP4
-#define Board_PN5                   MSP_EXP432E401Y_PN5
-#define Board_PN4                   MSP_EXP432E401Y_PN4
-#define Board_PD5                   MSP_EXP432E401Y_PD5
-#define Board_PP0                   MSP_EXP432E401Y_PP0
-#define Board_PD4                   MSP_EXP432E401Y_PD4
+#define Board_SWITCH1_INT           MSP_EXP432E401Y_PP4
+#define Board_SWITCH2_INT           MSP_EXP432E401Y_PN5
+#define Board_SWITCH3_INT           MSP_EXP432E401Y_PN4
+#define Board_SWITCH4_INT           MSP_EXP432E401Y_PA5
+#define Board_SOLENOID_INP          MSP_EXP432E401Y_PM6
+#define Board_MOTOR1_EN             MSP_EXP432E401Y_PD2
+#define Board_MOTOR1_M1             MSP_EXP432E401Y_PP0
+#define Board_MOTOR1_M2             MSP_EXP432E401Y_PP1
+#define Board_MOTOR1_M3             MSP_EXP432E401Y_PD4
+#define Board_MOTOR1_STEP           MSP_EXP432E401Y_PD5
+#define Board_MOTOR1_DIR            MSP_EXP432E401Y_PQ0
+#define Board_MOTOR2_EN             MSP_EXP432E401Y_PQ2
+#define Board_MOTOR2_M1             MSP_EXP432E401Y_PA7
+#define Board_MOTOR2_M2             MSP_EXP432E401Y_PP5
+#define Board_MOTOR2_M3             MSP_EXP432E401Y_PM7
+#define Board_MOTOR2_STEP           MSP_EXP432E401Y_PP3
+#define Board_MOTOR2_DIR            MSP_EXP432E401Y_PQ3
 
 /* Board specific I2C addresses */
 #define Board_TMP_ADDR              (0x40)
